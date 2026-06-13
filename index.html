@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ComplianceOne - AI Obligations Platform</title>
+    <script>
+      // Compatibility patch to prevent "Cannot set property fetch of #<Window> which has only a getter" errors
+      (function() {
+        try {
+          var originalFetch = window.fetch;
+          var currentFetch = originalFetch;
+          
+          // Check if fetch description is writable or redefine-able
+          var desc = Object.getOwnPropertyDescriptor(window, 'fetch') || Object.getOwnPropertyDescriptor(Object.getPrototypeOf(window), 'fetch');
+          if (desc && desc.configurable) {
+            Object.defineProperty(window, 'fetch', {
+              get: function() {
+                return currentFetch;
+              },
+              set: function(val) {
+                currentFetch = val;
+              },
+              configurable: true,
+              enumerable: true
+            });
+          } else {
+            // If window.fetch is not configurable, fallback to patching globalThis directly if possible
+            var originalGlobalThisFetch = globalThis.fetch;
+            var currentGlobalThisFetch = originalGlobalThisFetch;
+            var gtDesc = Object.getOwnPropertyDescriptor(globalThis, 'fetch');
+            if (gtDesc && gtDesc.configurable) {
+              Object.defineProperty(globalThis, 'fetch', {
+                get: function() {
+                  return currentGlobalThisFetch;
+                },
+                set: function(val) {
+                  currentGlobalThisFetch = val;
+                },
+                configurable: true,
+                enumerable: true
+              });
+            }
+          }
+        } catch (e) {
+          console.warn("ComplianceOne: Could not patch fetch/globalThis compatibilities:", e);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

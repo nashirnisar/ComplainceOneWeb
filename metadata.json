@@ -1,0 +1,6 @@
+{
+  "name": "ComplianceOne",
+  "description": "An AI-powered compliance and financial obligations management platform for individuals, freelancers, startups, and small businesses.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
