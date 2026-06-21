@@ -348,65 +348,65 @@ export default function App() {
         </div>
 
         {/* 3. CORE SUMMARY METRICS CARDS */}
-        <div id="compliance-summary-section" className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+        <div id="compliance-summary-section" className="grid grid-cols-4 gap-1.5 sm:gap-3">
           
           <div 
             onClick={() => setStatusFilter('All')}
-            className={`cursor-pointer p-2.5 sm:p-3 rounded-lg sm:rounded-xl shadow-xs transition hover:scale-[1.02] duration-150 border select-none ${
+            className={`cursor-pointer p-1.5 min-[370px]:p-2.5 sm:p-3.5 rounded-lg sm:rounded-xl shadow-xs transition hover:scale-[1.02] duration-150 border select-none text-center ${
               statusFilter === 'All' 
                 ? 'bg-indigo-50/40 border-indigo-500 ring-2 ring-indigo-500/20' 
                 : 'bg-white border-slate-200 hover:border-indigo-300'
             }`}
             title="Show all tasks in ledger"
           >
-            <p className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1 truncate">Active Tasks</p>
-            <div className="flex items-baseline">
-              <p className="text-xl sm:text-2xl font-black text-slate-800 leading-none">{String(totalTasks).padStart(2, '0')}</p>
+            <p className="text-[8px] min-[370px]:text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-0.5 sm:mb-1 truncate">Active</p>
+            <div className="flex items-baseline justify-center">
+              <p className="text-base min-[370px]:text-xl sm:text-2xl font-black text-slate-800 leading-none">{String(totalTasks).padStart(2, '0')}</p>
             </div>
           </div>
 
           <div 
             onClick={() => setStatusFilter('Pending')}
-            className={`cursor-pointer p-2.5 sm:p-3 rounded-lg sm:rounded-xl shadow-xs transition hover:scale-[1.02] duration-150 border select-none ${
+            className={`cursor-pointer p-1.5 min-[370px]:p-2.5 sm:p-3.5 rounded-lg sm:rounded-xl shadow-xs transition hover:scale-[1.02] duration-150 border select-none text-center ${
               statusFilter === 'Pending' 
                 ? 'bg-amber-50/45 border-amber-500 ring-2 ring-amber-500/20' 
                 : 'bg-white border-slate-200 hover:border-amber-300'
             }`}
             title="Filter by Pending tasks"
           >
-            <p className="text-[10px] sm:text-[11px] font-bold text-amber-600 uppercase tracking-wider mb-1 truncate">Upcoming</p>
-            <div className="flex items-baseline">
-              <p className="text-xl sm:text-2xl font-black text-amber-600 leading-none">{String(upcomingTasks).padStart(2, '0')}</p>
+            <p className="text-[8px] min-[370px]:text-[10px] sm:text-[11px] font-bold text-amber-600 uppercase tracking-wider mb-0.5 sm:mb-1 truncate">Upcoming</p>
+            <div className="flex items-baseline justify-center">
+              <p className="text-base min-[370px]:text-xl sm:text-2xl font-black text-amber-600 leading-none">{String(upcomingTasks).padStart(2, '0')}</p>
             </div>
           </div>
 
           <div 
             onClick={() => setStatusFilter('Overdue')}
-            className={`cursor-pointer p-2.5 sm:p-3 rounded-lg sm:rounded-xl shadow-xs transition hover:scale-[1.02] duration-150 border select-none ${
+            className={`cursor-pointer p-1.5 min-[370px]:p-2.5 sm:p-3.5 rounded-lg sm:rounded-xl shadow-xs transition hover:scale-[1.02] duration-150 border select-none text-center ${
               statusFilter === 'Overdue' 
                 ? 'bg-rose-50/60 border-rose-400 ring-2 ring-rose-500/10' 
                 : 'bg-rose-50 border-rose-100 hover:border-rose-300'
             }`}
             title="Filter by Overdue critical actions"
           >
-            <p className="text-[10px] sm:text-[11px] font-bold text-rose-600 uppercase tracking-wider mb-1 truncate">Overdue Action</p>
-            <div className="flex items-baseline">
-              <p className="text-xl sm:text-2xl font-black text-rose-600 leading-none">{String(overdueTasks).padStart(2, '0')}</p>
+            <p className="text-[8px] min-[370px]:text-[10px] sm:text-[11px] font-bold text-rose-600 uppercase tracking-wider mb-0.5 sm:mb-1 truncate">Overdue</p>
+            <div className="flex items-baseline justify-center">
+              <p className="text-base min-[370px]:text-xl sm:text-2xl font-black text-rose-600 leading-none">{String(overdueTasks).padStart(2, '0')}</p>
             </div>
           </div>
 
           <div 
             onClick={() => setStatusFilter('Completed')}
-            className={`cursor-pointer p-2.5 sm:p-3 rounded-lg sm:rounded-xl shadow-xs transition hover:scale-[1.02] duration-150 border select-none ${
+            className={`cursor-pointer p-1.5 min-[370px]:p-2.5 sm:p-3.5 rounded-lg sm:rounded-xl shadow-xs transition hover:scale-[1.02] duration-150 border select-none text-center ${
               statusFilter === 'Completed' 
                 ? 'bg-emerald-50/60 border-emerald-400 ring-2 ring-emerald-500/10' 
                 : 'bg-emerald-50 border-emerald-100 hover:border-emerald-300'
             }`}
             title="Filter by Completed tasks"
           >
-            <p className="text-[10px] sm:text-[11px] font-bold text-emerald-600 uppercase tracking-wider mb-1 truncate">Completed</p>
-            <div className="flex items-baseline">
-              <p className="text-xl sm:text-2xl font-black text-emerald-600 leading-none">{String(completedTasks).padStart(2, '0')}</p>
+            <p className="text-[8px] min-[370px]:text-[10px] sm:text-[11px] font-bold text-emerald-600 uppercase tracking-wider mb-0.5 sm:mb-1 truncate">Completed</p>
+            <div className="flex items-baseline justify-center">
+              <p className="text-base min-[370px]:text-xl sm:text-2xl font-black text-emerald-600 leading-none">{String(completedTasks).padStart(2, '0')}</p>
             </div>
           </div>
 
