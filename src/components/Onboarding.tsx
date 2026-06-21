@@ -82,13 +82,13 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
     <div id="onboarding-container" className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center items-center space-x-3">
-          <div className="bg-emerald-600 text-white p-2.5 rounded-xl shadow-md">
+          <div className="bg-indigo-600 text-white p-2.5 rounded-xl shadow-md">
             <Shield className="h-7 w-7" />
           </div>
-          <span className="text-2xl font-bold font-sans text-slate-900 tracking-tight">ComplianceOne</span>
+          <span className="text-2xl font-bold font-sans text-slate-900 tracking-tight">TaxOne</span>
         </div>
         <h2 className="mt-4 text-center text-3xl font-extrabold text-slate-800 tracking-tight">
-          {step === 0 ? (isLoginMode ? 'Sign in to ComplianceOne' : 'Get Started with ComplianceOne') :
+          {step === 0 ? (isLoginMode ? 'Sign in to TaxOne' : 'Get Started with TaxOne') :
            step === 1 ? 'Choose Your Profile Type' : 'Setup Compliance Profile'}
         </h2>
         <p className="mt-1.5 text-center text-sm text-slate-500">
@@ -176,7 +176,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
                   }}
                   className="text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition"
                 >
-                  {isLoginMode ? 'New to ComplianceOne? Create an account' : 'Already have an account? Sign In'}
+                  {isLoginMode ? 'New to TaxOne? Create an account' : 'Already have an account? Sign In'}
                 </button>
               </div>
             </motion.div>

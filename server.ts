@@ -44,7 +44,7 @@ app.post("/api/gemini/chat", async (req, res) => {
     const ai = getAIInstance();
 
     // Reconstruct the chat context from the client
-    const systemInstruction = `You are ComplianceOne AI, a professional and highly knowledgeable regulatory and compliance assistant.
+    const systemInstruction = `You are TaxOne AI, a professional and highly knowledgeable regulatory and compliance assistant.
 Your goal is to help individuals, freelancers, startups, and small businesses understand their compliance filing schedules, tax deadlines, penalty risks, and statutory guides.
 
 CRITICAL INSTRUCTION FOR CONCISENESS:
@@ -134,7 +134,7 @@ async function setupServer() {
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`[ComplianceOne] Server listening on http://0.0.0.0:${PORT}`);
+    console.log(`[TaxOne] Server listening on http://0.0.0.0:${PORT}`);
   });
 }
 

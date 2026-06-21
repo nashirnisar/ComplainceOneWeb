@@ -14,7 +14,7 @@ export default function AIAssistant({ userProfile, tasks, onClose }: AIAssistant
     {
       id: 'welcome_1',
       sender: 'assistant',
-      content: `How can I help you today? I'm ComplianceOne AI, your dedicated financial obligation advisor.
+      content: `How can I help you today? I'm TaxOne AI, your dedicated financial obligation advisor.
 
 I have analyzed your **${userProfile?.userType || "profile"}** details. Ask me any tax, corporate-filing, or compliance questions, and I can also alert or contact your advisor instantly.`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -76,7 +76,7 @@ I have analyzed your **${userProfile?.userType || "profile"}** details. Ask me a
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to fetch response from ComplianceOne engine.");
+        throw new Error(errorData.error || "Failed to fetch response from TaxOne engine.");
       }
 
       const data = await response.json();
@@ -185,7 +185,7 @@ I have analyzed your **${userProfile?.userType || "profile"}** details. Ask me a
           </div>
           <div>
             <h3 className="text-sm font-black tracking-tight text-white flex items-center">
-              <span>ComplianceOne AI</span>
+              <span>TaxOne AI</span>
               <span className="ml-2 h-2 w-2 bg-emerald-400 rounded-full inline-block"></span>
             </h3>
             <p className="text-[10px] text-indigo-300 font-mono">Powered by Gemini 3.5-Flash</p>

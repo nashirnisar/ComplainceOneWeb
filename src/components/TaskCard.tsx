@@ -122,11 +122,11 @@ export default function TaskCard({ task, onSelect, onToggleComplete }: TaskCardP
           onClick={(e) => onToggleComplete(task.id, e)}
           className={`px-3 py-1 text-xs font-bold rounded-lg cursor-pointer transition-all ${
             task.status === 'Completed'
-              ? 'bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200'
+              ? 'bg-[#ecfdf5] hover:bg-emerald-100 text-[#047857] border border-emerald-250'
               : 'bg-indigo-50 hover:bg-indigo-600 hover:text-white text-indigo-700 border border-indigo-150'
           }`}
         >
-          {task.status === 'Completed' ? 'Re-open' : 'Mark Done'}
+          {task.status === 'Completed' ? 'Sent to Advisor' : 'Send to Advisor'}
         </button>
       </div>
     </motion.div>

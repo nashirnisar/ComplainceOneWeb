@@ -185,7 +185,7 @@ export default function TaskDetail({ task, onClose, onToggleComplete }: TaskDeta
                   : 'bg-emerald-600 hover:bg-emerald-700 text-white'
               }`}
             >
-              <span>{task.status === 'Completed' ? 'Mark Pending' : 'Mark as Completed'}</span>
+              <span>{task.status === 'Completed' ? 'Resend to Advisor' : 'Send to Advisor'}</span>
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>

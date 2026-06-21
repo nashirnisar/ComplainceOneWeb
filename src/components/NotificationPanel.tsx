@@ -62,7 +62,7 @@ export default function NotificationPanel({ tasks, userEmail }: NotificationPane
           id: `notif_1_${task.id}`,
           taskId: task.id,
           title: `CRITICAL 24h ALERT: ${task.name} Due Tomorrow!`,
-          message: `ComplianceOne action required! Filing must be finalized and uploaded on portal within 24 hours to avoid instant ${task.penalty} late penalties.`,
+          message: `TaxOne action required! Filing must be finalized and uploaded on portal within 24 hours to avoid instant ${task.penalty} late penalties.`,
           timestamp: 'EXTREME URGENCY',
           read: false,
           type: 'alert'
@@ -95,7 +95,7 @@ export default function NotificationPanel({ tasks, userEmail }: NotificationPane
     // Add a system welcome notification
     alerts.unshift({
       id: 'notif_welcome',
-      title: 'ComplianceOne Sync Active',
+      title: 'TaxOne Sync Active',
       message: `Successfully connected database to user registry. Automated notification triggers now tracking on email: ${userEmail}.`,
       timestamp: 'Today',
       read: false,
