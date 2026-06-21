@@ -35,6 +35,9 @@ export default function App() {
   // Interactive Toast State
   const [toast, setToast] = useState<string | null>(null);
 
+  // Selected News Bulletin Modal State
+  const [selectedNews, setSelectedNews] = useState<any | null>(null);
+
   // Auto scroll to top on initial mount/profile loaded
   useEffect(() => {
     if (profile && profile.isOnboarded) {
@@ -146,7 +149,10 @@ export default function App() {
       const fresh = generateCompliancesForUser(profile);
       setTasks(fresh);
       localStorage.setItem('compliancemate_tasks', JSON.stringify(fresh));
-      alert("Compliance timeline synced and recalculated successfully based on rules template database.");
+      setToast("⚡ Compliance times synced & recalculated successfully.");
+      setTimeout(() => {
+        setToast(null);
+      }, 4000);
     }
   };
 
@@ -322,7 +328,7 @@ export default function App() {
                 <div 
                   key={`${item.id}-${idx}`}
                   className="inline-flex items-center space-x-2 cursor-pointer hover:text-indigo-600 transition"
-                  onClick={() => alert(`[${item.category}] ${item.title}\nSource: ${item.source} (${item.date})\n\n${item.summary}`)}
+                  onClick={() => setSelectedNews(item)}
                 >
                   <span className={`font-mono font-extrabold text-[9px] px-1.5 py-0.5 rounded-sm uppercase ${
                     item.category === 'Tax' ? 'text-amber-700 bg-amber-50 border border-amber-200' :
@@ -342,7 +348,7 @@ export default function App() {
         </div>
 
         {/* 3. CORE SUMMARY METRICS CARDS */}
-        <div id="compliance-summary-section" className="grid grid-cols-4 gap-2 sm:gap-3">
+        <div id="compliance-summary-section" className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
           
           <div 
             onClick={() => setStatusFilter('All')}
@@ -507,6 +513,67 @@ export default function App() {
         />
       )}
 
+      {/* 6.5. NEWS BULLETIN DETAILED MODAL OVERLAY */}
+      <AnimatePresence>
+        {selectedNews && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-105 flex flex-col text-left"
+            >
+              <div className="bg-slate-900 text-white p-5 flex justify-between items-start relative">
+                <div>
+                  <span className={`inline-block px-2 sm:px-2.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wider mb-2 ${
+                    selectedNews.category === 'Tax' ? 'text-amber-450 bg-amber-500/20' :
+                    selectedNews.category === 'Startup' ? 'text-emerald-450 bg-emerald-500/20' :
+                    selectedNews.category === 'Regulation' ? 'text-purple-450 bg-purple-500/20' :
+                    'text-blue-455 bg-blue-500/20'
+                  }`}>
+                    {selectedNews.category}
+                  </span>
+                  <h3 className="text-sm sm:text-base font-black tracking-tight text-white leading-normal pr-4">
+                    {selectedNews.title}
+                  </h3>
+                </div>
+                <button
+                  onClick={() => setSelectedNews(null)}
+                  className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition cursor-pointer shrink-0"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="p-5 sm:p-6 space-y-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                <div className="bg-slate-50 p-3 sm:p-3.5 rounded-xl border border-slate-100 flex justify-between text-slate-450 font-mono text-[9px] sm:text-[10px]">
+                  <span>Source: <strong className="text-slate-700">{selectedNews.source}</strong></span>
+                  <span>Date: <strong className="text-slate-700">{selectedNews.date}</strong></span>
+                </div>
+                <div className="space-y-1.5">
+                  <h4 className="font-extrabold text-slate-800 text-[10px] uppercase tracking-wider">Advisory Briefing</h4>
+                  <div className="bg-indigo-50/20 border border-indigo-100/50 p-4 rounded-xl text-slate-650 text-xs sm:text-sm shadow-xs leading-relaxed">
+                    {selectedNews.summary}
+                  </div>
+                </div>
+                <p className="text-[10px] text-slate-400 leading-normal pt-2 border-t border-slate-100/70">
+                  This advisory alert is automatically synchronised to help your workspace track structural tax filing and corporate compliance directives seamlessly.
+                </p>
+              </div>
+
+              <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end">
+                <button
+                  onClick={() => setSelectedNews(null)}
+                  className="px-4 py-2 bg-slate-850 hover:bg-slate-900 text-white rounded-xl text-xs font-bold transition cursor-pointer"
+                >
+                  Close Bulletin
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
       {/* 7. CONTACT ADVISOR DIALOG MODAL */}
       {isContactModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
@@ -588,7 +655,7 @@ export default function App() {
       )}
 
       {/* 8. FLOATING COMPLIANCE AI ASSISTANT FAB & DRAWER OVERLAY */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end space-y-4">
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end space-y-4 max-w-[calc(100vw-2rem)]">
         <AnimatePresence>
           {isAIChatOpen && (
             <motion.div
@@ -596,9 +663,9 @@ export default function App() {
               initial={{ opacity: 0, y: 50, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 50, scale: 0.9 }}
-              className="w-80 sm:w-100 shadow-2xl rounded-3xl overflow-hidden border border-indigo-950 bg-[#1e1b4b]"
+              className="w-80 max-w-full sm:w-100 shadow-2xl rounded-3xl overflow-hidden border border-indigo-950 bg-[#1e1b4b]"
             >
-              <div className="h-[550px] flex flex-col">
+              <div className="h-[550px] max-h-[70vh] flex flex-col">
                 <AIAssistant 
                   userProfile={profile} 
                   tasks={tasks} 

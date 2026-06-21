@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ComplianceTask, NotificationItem } from '../types';
-import { Bell, Mail, AlertTriangle, Check, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { Bell, Mail, AlertTriangle, Check, CheckCircle2, ShieldAlert, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface NotificationPanelProps {
@@ -11,6 +11,7 @@ interface NotificationPanelProps {
 export default function NotificationPanel({ tasks, userEmail }: NotificationPanelProps) {
   const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [simulatedEmail, setSimulatedEmail] = useState<{ title: string; to: string; from: string; body: string } | null>(null);
 
   // Generate dynamic reminders based on task due date gaps
   useEffect(() => {
@@ -116,7 +117,12 @@ export default function NotificationPanel({ tasks, userEmail }: NotificationPane
   };
 
   const notifyUserOfEmailSimulation = (title: string) => {
-    alert(`[EMAIL SIMULATOR]\nFrom: alerts@compliancemate.gov\nTo: ${userEmail}\nSubject: DOCKED COMPLIANCE OBLIGATION - "${title}"\n\nCompliance Mate has dispatched a reminder to your inbox. Let's finish your filing steps on time to avoid fines.`);
+    setSimulatedEmail({
+      title,
+      to: userEmail,
+      from: 'alerts@taxone.ai',
+      body: `This is an official automated advisory regarding your upcoming corporate tax declarations or state filing steps. Please review all items in your Obligations Ledger, coordinate with your CPA, and submit necessary declarations on TaxOne's lobby to safeguard against regulatory notices or compound penalty calculations.`
+    });
   };
 
   return (
@@ -145,7 +151,7 @@ export default function NotificationPanel({ tasks, userEmail }: NotificationPane
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="absolute right-0 mt-2.5 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-50 flex flex-col max-h-[500px]"
+              className="absolute right-[-2.5rem] sm:right-0 mt-2.5 w-[calc(100vw-2.5rem)] max-w-[360px] sm:max-w-none sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden z-50 flex flex-col max-h-[500px]"
             >
               {/* Notif Header */}
               <div className="p-4 bg-slate-900 text-white flex justify-between items-center bg-radial">
@@ -225,6 +231,61 @@ export default function NotificationPanel({ tasks, userEmail }: NotificationPane
               </div>
             </motion.div>
           </>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {simulatedEmail && (
+          <div className="fixed inset-0 z-55 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 15 }}
+              className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-slate-100 text-left"
+            >
+              {/* Fake Email Header */}
+              <div className="bg-[#1e1b4b] text-white p-4 flex items-center justify-between">
+                <span className="font-mono text-[9px] font-black uppercase tracking-widest text-[#818cf8]">Email Dispatch Simulator</span>
+                <button
+                  type="button"
+                  onClick={() => setSimulatedEmail(null)}
+                  className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                >
+                  <X className="h-4.5 w-4.5" />
+                </button>
+              </div>
+
+              {/* Email Fields */}
+              <div className="p-4 bg-slate-50 border-b border-slate-100 text-xs text-slate-650 space-y-1 my-0">
+                <div className="flex items-baseline space-x-1"><span className="font-extrabold text-[#4338ca] text-[9px] uppercase tracking-wider shrink-0 w-12">From:</span> <span className="truncate">{simulatedEmail.from}</span></div>
+                <div className="flex items-baseline space-x-1"><span className="font-extrabold text-[#4338ca] text-[9px] uppercase tracking-wider shrink-0 w-12">To:</span> <span className="truncate">{simulatedEmail.to}</span></div>
+                <div className="flex items-baseline space-x-1"><span className="font-extrabold text-[#4338ca] text-[9px] uppercase tracking-wider shrink-0 w-12">Subject:</span> <span className="font-bold text-slate-800 truncate">REVALUATED TASK REMINDER - {simulatedEmail.title}</span></div>
+              </div>
+
+              {/* Email Body */}
+              <div className="p-5 text-slate-700 space-y-3.5 text-xs sm:text-sm">
+                <p className="font-extrabold text-slate-900">Dear Taxpayer,</p>
+                <p className="leading-relaxed text-slate-600 text-xs">
+                  {simulatedEmail.body}
+                </p>
+                <div className="border-t border-slate-100 pt-3.5 mt-4 text-[10px] text-slate-400 flex items-center space-x-1.5">
+                  <Check className="h-4 w-4 text-emerald-500 shrink-0" />
+                  <span>TaxOne Automated Broadcast & Dispatch Service</span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="bg-slate-50 p-4 border-t border-slate-100 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setSimulatedEmail(null)}
+                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-sm cursor-pointer"
+                >
+                  Close Simulator
+                </button>
+              </div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>

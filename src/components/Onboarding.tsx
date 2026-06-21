@@ -28,6 +28,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
   const [cin, setCin] = useState('');
 
   const [errorMsg, setErrorMsg] = useState('');
+  const [infoMsg, setInfoMsg] = useState('');
 
   const handleAuthSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +37,7 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
       return;
     }
     setErrorMsg('');
+    setInfoMsg('');
     setName(authName || name || authEmail.split('@')[0]); // Fallback
     setStep(1); // Proceed to role selection
   };
@@ -101,8 +103,14 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg">
         <div className="bg-white py-8 px-6 shadow-xl rounded-2xl border border-slate-100 sm:px-10">
           {errorMsg && (
-            <div className="mb-4 bg-red-50 text-red-700 p-3 rounded-lg text-sm font-medium border border-red-100">
+            <div className="mb-4 bg-red-50 text-red-700 p-3 rounded-lg text-sm font-medium border border-red-100 text-left">
               {errorMsg}
+            </div>
+          )}
+
+          {infoMsg && (
+            <div className="mb-4 bg-emerald-50 text-emerald-800 p-3 rounded-lg text-xs font-bold border border-emerald-100 text-left animate-pulse">
+              {infoMsg}
             </div>
           )}
 
@@ -140,8 +148,11 @@ export default function Onboarding({ onComplete }: OnboardingProps) {
                     {isLoginMode && (
                       <button
                         type="button"
-                        onClick={() => alert("Password reset simulated! Please sign in with any credentials.")}
-                        className="text-xs font-semibold text-emerald-600 hover:text-emerald-700"
+                        onClick={() => {
+                          setErrorMsg('');
+                          setInfoMsg("✓ Password reset simulated! Instructions dispatched to email.");
+                        }}
+                        className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 cursor-pointer"
                       >
                         Forgot password?
                       </button>
